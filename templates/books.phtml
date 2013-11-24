@@ -1,0 +1,22 @@
+<table>
+    <thead>
+        <tr>
+            <td>ISBN</td>
+            <th>Title</th>
+            <th>Authors</th>
+            <th>Required for Courses</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+<?php foreach($books as $book): ?>
+        <tr>
+            <td><a href="<?= ROOT_URL ?>/book/<?= $book->isbn ?>"><?= sprintf("%s-%s-%s-%s-%s", substr($book->isbn, 0, 3), substr($book->isbn, 3, 1), substr($book->isbn, 4, 2), substr($book->isbn, 6, 6), substr($book->isbn, 12, 1)) ?></a></td>
+            <td><?= $book->title ?></td>
+            <td><?= $book->authors ?></td>
+            <td><?= $book->courses ?></td>
+            <td>$<?= sprintf("%d.%02d", $book->price / 100, $book->price % 100) ?></td>
+        </tr>
+<?php endforeach; ?>
+    </tbody>
+</table>
