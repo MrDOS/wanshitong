@@ -13,16 +13,16 @@ use wanshitong\models\Books;
  */
 class BooksController extends Controller
 {
-    private $booksRepository;
+    private $books_repository;
 
     /**
      * Construct the controller.
      *
      * @param \wanshitong\models\Books $bookRepository a book repository
      */
-    public function __construct($booksRepository)
+    public function __construct($books_repository)
     {
-        $this->booksRepository = $booksRepository;
+        $this->books_repository = $books_repository;
     }
 
     /**
