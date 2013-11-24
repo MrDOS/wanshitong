@@ -10,6 +10,7 @@ class PageView implements View
 {
     private $title;
     private $content;
+    private $book_navigation;
 
     /**
      * Construct the view.
@@ -25,11 +26,14 @@ class PageView implements View
 
     public function render()
     {
+        if ($this->book_navigation == null)
+            $this->book_navigation = '<center><a href="' . ROOT_URL . '/books">Search for Books?</a></center>';
+
         $page = TemplateManager::getDefaultTemplateManager()->load('page', array(
                 'page_title' => $this->title,
                 'cart_size' => 0,
                 'staff_navigation' => '',
-                'book_navigation' => '',
+                'book_navigation' => $this->book_navigation,
                 'content' => $this->content
             ));
         $page->render();
