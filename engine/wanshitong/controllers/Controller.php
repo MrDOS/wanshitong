@@ -13,6 +13,7 @@ abstract class Controller
      * Handle a GET request.
      *
      * @param array $get GET parameters as an associative array
+     * @return \wanshitong\Template a template representative of the page content
      */
     public abstract function get($get);
 

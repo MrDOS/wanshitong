@@ -1,18 +1,35 @@
 <?php namespace wanshitong\controllers;
 
 use wanshitong\controllers\Controller;
+use wanshitong\views\BooksView;
 use wanshitong\models\Books;
-use wanshitong\TemplateManager;
 
+/**
+ * A request for a book list.
+ *
+ * @author scoleman
+ * @version 1.0.0
+ * @since 1.0.0
+ */
 class BooksController extends Controller
 {
     private $booksRepository;
 
+    /**
+     * Construct the controller.
+     *
+     * @param \wanshitong\models\Books $bookRepository a book repository
+     */
     public function __construct($booksRepository)
     {
         $this->booksRepository = $booksRepository;
     }
 
+    /**
+     * Display the book list.
+     *
+     * @param array $get GET parameters
+     */
     public function get($get)
     {
         if (isset($get['author']))
@@ -24,6 +41,7 @@ class BooksController extends Controller
                 (isset($get['section'])) ? $get['section'] : null
             );
 
-        TemplateManager::getDefaultTemplateManager()->load('books', array('books' => $books))->render();
+        $view = new BooksView($books);
+        $view->render();
     }
 }

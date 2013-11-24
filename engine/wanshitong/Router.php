@@ -75,6 +75,7 @@ class Router
      * parameter names.
      *
      * @param array $mappings request mappings
+     * @return mixed anything returned by the controller; usually null
      */
     public static function route($mappings)
     {
@@ -86,11 +87,9 @@ class Router
         switch ($_SERVER['REQUEST_METHOD'])
         {
             case 'POST':
-                $controller->post($parameters, $_POST);
-                break;
+                return $controller->post($parameters, $_POST);
             default:
-                $controller->get($parameters);
-                break;
+                return $controller->get($parameters);
         }
     }
 

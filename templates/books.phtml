@@ -1,22 +1,37 @@
-<table>
-    <thead>
+<form action="<?= ROOT_URL ?>/cart" method="post">
+    <table class="books">
         <tr>
-            <td>ISBN</td>
             <th>Title</th>
-            <th>Authors</th>
-            <th>Required for Courses</th>
+            <th>Author</th>
+            <th>ISBN</th>
+            <th>Stock</th>
             <th>Price</th>
+            <th>Course(s):</th>
+            <th>Order</th>
         </tr>
-    </thead>
-    <tbody>
-<?php foreach($books as $book): ?>
+    <?php foreach($books as $book): ?>
         <tr>
-            <td><a href="<?= ROOT_URL ?>/book/<?= $book->isbn ?>"><?= sprintf("%s-%s-%s-%s-%s", substr($book->isbn, 0, 3), substr($book->isbn, 3, 1), substr($book->isbn, 4, 2), substr($book->isbn, 6, 6), substr($book->isbn, 12, 1)) ?></a></td>
             <td><?= $book->title ?></td>
-            <td><?= $book->authors ?></td>
-            <td><?= $book->courses ?></td>
+            <td><?= str_replace(', ', '<br />', $book->authors) ?></td>
+            <td><?= sprintf("%s-%s-%s-%s-%s", substr($book->isbn, 0, 3), substr($book->isbn, 3, 1), substr($book->isbn, 4, 2), substr($book->isbn, 6, 6), substr($book->isbn, 12, 1)) ?></td>
+            <td>In-Stock</td>
             <td>$<?= sprintf("%d.%02d", $book->price / 100, $book->price % 100) ?></td>
+            <td><?= str_replace(', ', '<br />', $book->courses) ?></td>
+            <td>
+                <center>
+                    <input type="checkbox" name="books[]" value="<?= $book->isbn ?>">
+                </center>
+            </td>
         </tr>
-<?php endforeach; ?>
-    </tbody>
-</table>
+    <?php endforeach; ?>
+        <tr>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th><center><input type="submit" name="cart_add" value="Order"></center></th>
+        </tr>
+    </table>
+</form>

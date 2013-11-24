@@ -1,6 +1,7 @@
 <?php namespace wanshitong\controllers;
 
 use \wanshitong\controllers\Controller;
+use wanshitong\views\PageView;
 
 /**
  * A generic error controller.
@@ -11,11 +12,17 @@ use \wanshitong\controllers\Controller;
  */
 class ErrorController extends Controller
 {
+    /**
+     * Display the error.
+     *
+     * @param array $get GET parameters
+     */
     public function get($get)
     {
-        \wanshitong\TemplateManager::getDefaultTemplateManager()->load('page', array(
-                'page_title' => 'Page Not Found',
-                'content' => '<p>The resource you requested could not be located.</p>'
-            ))->render();
+        $view = new PageView('Page Not Found', <<<HTML
+<p>The resource you requested could not be located.</p>
+HTML
+                    );
+        $view->render();
     }
 }

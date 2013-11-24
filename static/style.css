@@ -1,0 +1,145 @@
+a
+{
+	color: #1C140D;
+}
+
+a:hover
+{
+	text-decoration: none;
+}
+
+body
+{
+    font: normal 11pt "Trebuchet MS",Helvetica, sans-serif;
+    margin: 0;
+    color: #1C140D;
+    background-image: url("pageback.png");
+}
+
+div#main th
+{
+	padding: 5px;
+}
+
+div#main td
+{
+	 padding: 5px;
+	 border: 1px solid black;
+}
+
+div#container
+{
+    margin: auto;
+    width: 970px;
+}
+
+div#footer
+{
+    text-align: center;
+    background-color: #1C140D;
+	color: #F2E9E1;
+    padding: 10px;
+    margin: 5px 0 0 0;
+}
+
+div#nav1
+{
+	text-align: right;
+	background-color: #1C140D;
+	color: #F2E9E1;
+	padding: 10px;
+	margin: 0px;
+}
+
+div#nav1 a
+{
+	color: #F2E9E1;
+}
+
+div#nav1 a:hover
+{
+	text-decoration: none;
+}
+
+
+div#nav1 ul
+{
+	padding: 0px;
+	margin: 0px;
+}
+
+div#nav1 ul li
+{
+	display: inline;
+}
+
+div#nav2
+{
+	background-color: #F2E9E1;
+	color: #1C140D;
+	padding: 10px;
+	margin: 0px;
+}
+
+div#nav2 ul
+{
+	padding: 0px;
+	margin: 0px;
+}
+
+div#nav2 ul li
+{
+	display: inline;
+}
+
+div#divider
+{
+	background-color: #CBE86B;
+	padding: 0px;
+	height: 10px;
+	margin: -20px 0 -5px 0;
+}
+
+div#header
+{
+	background-color: #CBE86B;
+	color: #1C140D;
+	margin: 0px;
+	padding: 10px;
+}
+
+div#header h2
+{
+	font-size: 14px;
+	text-align: right;
+	margin-top: -25px;
+}
+
+div#header h1
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+div#header h1 a
+{
+    text-decoration: none;
+}
+
+div#main
+{
+    text-align: justify;
+    background-color: #F2E9E1;
+	color: #1C140D;
+    padding: 10px;
+    margin: 5px 0 0 0;
+}
+
+div#main a
+{
+}
+
+div#main a:hover
+{
+}
+

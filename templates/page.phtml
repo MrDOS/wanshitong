@@ -2,10 +2,30 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title><?= $page_title ?></title>
+        <title><?= SITE_NAME ?> - <?= $page_title ?></title>
+        <link rel="stylesheet" type="text/css" href="<?= RES_URL ?>/style.css" />
     </head>
     <body>
-        <h1><?= $page_title ?></h1>
-        <?= $content ?>
+        <div id="container">
+            <div id="header">
+                <h1><a href="<?= ROOT_URL ?>"><?= SITE_NAME ?></a></h1>
+                <h2><a href="<?= ROOT_URL ?>/cart"><?= $cart_size ?> Items in Cart</a></h2>
+            </div>
+            <div id="nav1">
+                <?= $staff_navigation ?>
+            </div>
+            <div id="nav2">
+                <?= $book_navigation ?>
+            </div>
+            <div id="divider">
+                <p>&nbsp;</p>
+            </div>
+            <div id="main">
+                <?= $content ?>
+            </div>
+            <div id="footer">
+                <p>Copyright <?= date('Y') ?> <?= SITE_OWNER ?>.</p>
+            </div>
+        </div>
     </body>
 </html>
