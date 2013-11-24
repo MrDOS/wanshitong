@@ -33,9 +33,9 @@ class BooksController extends Controller
     public function get($get)
     {
         if (isset($get['author']))
-            $books = $this->booksRepository->getStockedBooksByAuthor($get['author']);
+            $books = $this->books_repository->getStockedBooksByAuthor($get['author']);
         else
-            $books = $this->booksRepository->getStockedBooks(
+            $books = $this->books_repository->getStockedBooks(
                 (isset($get['department'])) ? $get['department'] : null,
                 (isset($get['course'])) ? $get['course'] : null,
                 (isset($get['section'])) ? $get['section'] : null
