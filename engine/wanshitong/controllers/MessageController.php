@@ -34,7 +34,7 @@ class MessageController extends Controller
     }
 
     /**
-     * Display the book list.
+     * Display the message.
      *
      * @param array $get GET parameters
      */
