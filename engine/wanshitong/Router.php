@@ -13,8 +13,8 @@ class Router
 {
     /**
      * Route a user request according to given mappings. Mappings should be an
-     * associative array of route rules to string names or instances of classes
-     * extending \wanshitong\Controller.
+     * associative array of route rules to classes extending
+     * \wanshitong\Controller.
      *
      * A route rule is a regex describing a URL. For example, given a site at
      * "http://example.com/", this route rule:
@@ -106,6 +106,7 @@ class Router
                     $parameters = array_slice($parameters, 1);
                 }
 
+                $parameters = array_merge($_GET, $parameters);
                 return ($controller instanceof Controller) ? $controller : new $controller;
             }
         }
