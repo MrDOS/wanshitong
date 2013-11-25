@@ -1,0 +1,47 @@
+<form action="<?= ROOT_URL ?>/books" method="get">
+    <ul>
+        <li>
+            <select name="department">
+                <option value="">&ndash; Department &ndash;</option>
+<?php foreach($departments as $department): ?>
+                <option value="<?= $department->department_code ?>"<?= ($department->department_code === $selected_department) ? ' selected="selected"' : ''?>><?= $department->department_code ?></option>
+<?php endforeach; ?>
+            </select>
+        </li>
+        <li>
+            <select name="course">
+                <option value="">&ndash; Course &ndash;</option>
+<?php foreach($courses as $course): ?>
+                <option value="<?= $course->course_number ?>"<?= ($course->course_number === $selected_course) ? ' selected="selected"' : ''?>><?= $course->course_number ?></option>
+<?php endforeach; ?>
+            </select>
+        </li>
+        <li>
+            <select name="section">
+                <option value="">&ndash; Section &ndash;</option>
+<?php foreach($sections as $section): ?>
+                <option value="<?= $section->slot ?>"<?= ($section->slot === $selected_section) ? ' selected="selected"' : ''?>><?= $section->slot ?></option>
+<?php endforeach; ?>
+            </select>
+        </li>
+        <li>
+            <input type="submit" value="Search">
+        </li>
+        <li>|</li>
+        <li>
+            <select name="author">
+                <option value="">&ndash; Author &ndash;</option>
+<?php foreach($authors as $author): ?>
+                <option value="<?= $author->sort_name ?>"<?= ($author->sort_name === $selected_author) ? ' selected="selected"' : ''?>><?= $author->sort_name ?></option>
+<?php endforeach; ?>
+            </select>
+        </li>
+        <li>
+            <input type="submit" value="Search">
+        </li>
+        <li>|</li>
+        <li><a href="<?= ROOT_URL ?>/books">View All Books</a></li>
+        <li>|</li>
+        <li><a href="<?= ROOT_URL ?>/books/student">Get Book List</a></li>
+    </ul>
+</form>

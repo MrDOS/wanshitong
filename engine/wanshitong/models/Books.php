@@ -39,7 +39,7 @@ class Books implements Repository
         $query = <<<SQL
 SELECT t1.isbn, t1.title, t1.price,
 GROUP_CONCAT(DISTINCT t3.display_name ORDER BY t3.display_name SEPARATOR ', ') AS authors,
-GROUP_CONCAT(CONCAT_WS(' ', t7.department_code, t6.course_number, t5.slot) ORDER BY t7.department_code, t6.course_number, t5.slot SEPARATOR ', ') AS courses
+GROUP_CONCAT(DISTINCT CONCAT_WS(' ', t7.department_code, t6.course_number, t5.slot) ORDER BY t7.department_code, t6.course_number, t5.slot SEPARATOR ', ') AS courses
 FROM books t1
 LEFT JOIN book_authors t2 ON t2.isbn = t1.isbn
 LEFT JOIN authors t3 ON t3.author_id = t2.author_id
@@ -99,7 +99,7 @@ SQL;
         $books = $this->db->prepare(<<<SQL
 SELECT t1.isbn, t1.title, t1.price,
 GROUP_CONCAT(DISTINCT t3.display_name ORDER BY t3.display_name SEPARATOR ', ') AS authors,
-GROUP_CONCAT(CONCAT_WS(' ', t7.department_code, t6.course_number, t5.slot) ORDER BY t7.department_code, t6.course_number, t5.slot SEPARATOR ', ') AS courses
+GROUP_CONCAT(DISTINCT CONCAT_WS(' ', t7.department_code, t6.course_number, t5.slot) ORDER BY t7.department_code, t6.course_number, t5.slot SEPARATOR ', ') AS courses
 FROM books t1
 LEFT JOIN book_authors t2 ON t2.isbn = t1.isbn
 LEFT JOIN authors t3 ON t3.author_id = t2.author_id
@@ -128,7 +128,7 @@ SQL
         $books = $this->db->prepare(<<<SQL
 SELECT t1.isbn, t1.title, t1.quantity, t1.stocked, t1.price,
 GROUP_CONCAT(DISTINCT t3.display_name ORDER BY t3.display_name SEPARATOR ', ') AS authors,
-GROUP_CONCAT(CONCAT_WS(' ', t7.department_code, t6.course_number, t5.slot) ORDER BY t7.department_code, t6.course_number, t5.slot SEPARATOR ', ') AS courses
+GROUP_CONCAT(DISTINCT CONCAT_WS(' ', t7.department_code, t6.course_number, t5.slot) ORDER BY t7.department_code, t6.course_number, t5.slot SEPARATOR ', ') AS courses
 FROM books t1
 LEFT JOIN book_authors t2 ON t2.isbn = t1.isbn
 LEFT JOIN authors t3 ON t3.author_id = t2.author_id
@@ -155,7 +155,7 @@ SQL
         $books = $this->db->prepare(<<<SQL
 SELECT t1.isbn, t1.title, t1.price,
 GROUP_CONCAT(DISTINCT t3.display_name ORDER BY t3.display_name SEPARATOR ', ') AS authors,
-GROUP_CONCAT(CONCAT_WS(' ', t7.department_code, t6.course_number, t5.slot) ORDER BY t7.department_code, t6.course_number, t5.slot SEPARATOR ', ') AS courses
+GROUP_CONCAT(DISTINCT CONCAT_WS(' ', t7.department_code, t6.course_number, t5.slot) ORDER BY t7.department_code, t6.course_number, t5.slot SEPARATOR ', ') AS courses
 FROM books t1
 LEFT JOIN book_authors t2 ON t2.isbn = t1.isbn
 LEFT JOIN authors t3 ON t3.author_id = t2.author_id

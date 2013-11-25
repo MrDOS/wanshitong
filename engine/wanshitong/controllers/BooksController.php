@@ -14,15 +14,19 @@ use wanshitong\models\Books;
 class BooksController extends Controller
 {
     private $books_repository;
+    private $departments_repository;
+    private $authors_repository;
 
     /**
      * Construct the controller.
      *
      * @param \wanshitong\models\Books $bookRepository a book repository
      */
-    public function __construct($books_repository)
+    public function __construct($books_repository, $departments_repository, $authors_repository)
     {
         $this->books_repository = $books_repository;
+        $this->departments_repository = $departments_repository;
+        $this->authors_repository = $authors_repository;
     }
 
     /**
@@ -32,16 +36,27 @@ class BooksController extends Controller
      */
     public function get($get)
     {
-        if (isset($get['author']))
-            $books = $this->books_repository->getStockedBooksByAuthor($get['author']);
-        else
-            $books = $this->books_repository->getStockedBooks(
-                (isset($get['department'])) ? $get['department'] : null,
-                (isset($get['course'])) ? $get['course'] : null,
-                (isset($get['section'])) ? $get['section'] : null
-            );
+        $department = (isset($get['department']) && !empty($get['department'])) ? $get['department'] : null;
+        $course = (isset($get['course']) && !empty($get['course'])) ? $get['course'] : null;
+        $section = (isset($get['section']) && !empty($get['section'])) ? $get['section'] : null;
+        $author = (isset($get['author']) && !empty($get['author'])) ? $get['author'] : null;
 
-        $view = new BooksView($books);
+        if ($author)
+            $books = $this->books_repository->getStockedBooksByAuthor($author);
+        else
+            $books = $this->books_repository->getStockedBooks($department, $course, $section);
+
+        $departments = $this->departments_repository->getDepartments();
+        $courses = array();
+        $sections = array();
+        if ($department !== null)
+            $courses = $this->departments_repository->getCoursesByDepartment($department);
+        if ($department !== null && $course !== null)
+            $sections = $this->departments_repository->getSectionsByCourse($department, $course);
+
+        $authors = $this->authors_repository->getAuthors();
+
+        $view = new BooksView($books, $departments, $department, $courses, $course, $sections, $section, $authors, $author);
         $view->render();
     }
 }

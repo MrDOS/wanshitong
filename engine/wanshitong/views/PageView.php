@@ -24,6 +24,16 @@ class PageView implements View
         $this->content = $content;
     }
 
+    /**
+     * Set the book navigation bar.
+     *
+     * @param string|\wanshitong\Template $book_navigation the navigation bar
+     */
+    public function setBookNavigation($book_navigation)
+    {
+        $this->book_navigation = $book_navigation;
+    }
+
     public function render()
     {
         if ($this->book_navigation == null)

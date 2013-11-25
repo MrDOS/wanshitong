@@ -28,7 +28,9 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 use \wanshitong\controllers\BooksController;
 use \wanshitong\controllers\ErrorController;
 use \wanshitong\controllers\MessageController;
+use \wanshitong\models\Authors;
 use \wanshitong\models\Books;
+use \wanshitong\models\Departments;
 use \wanshitong\Router;
 
 /* Configure routes. */
@@ -37,19 +39,19 @@ Router::route(array(
             return new MessageController('Welcome', 'We have books! They are for sale! For money!');
         },
     '/books/?' => function() use ($db) {
-            return new BooksController(new Books($db));
+            return new BooksController(new Books($db), new Departments($db), new Authors($db));
         },
     '/books/([A-Z]{4})/?' => array(function() use ($db) {
-            return new BooksController(new Books($db));
+            return new BooksController(new Books($db), new Departments($db), new Authors($db));
         }, array('department')),
     '/books/([A-Z]{4})/([0-4][0-9]{2}[0136])/?' => array(function() use ($db) {
-            return new BooksController(new Books($db));
+            return new BooksController(new Books($db), new Departments($db), new Authors($db));
         }, array('department', 'course')),
     '/books/([A-Z]{4})/([0-4][0-9]{2}[0136])/([A-Z][0-9])/?' => array(function() use ($db) {
-            return new BooksController(new Books($db));
+            return new BooksController(new Books($db), new Departments($db), new Authors($db));
         }, array('department', 'course', 'section')),
     '/books/author/(.+?)/?' => array(function() use ($db) {
-            return new BooksController(new Books($db));
+            return new BooksController(new Books($db), new Departments($db), new Authors($db));
         }, array('author')),
     '.*' => new ErrorController()
 ));
