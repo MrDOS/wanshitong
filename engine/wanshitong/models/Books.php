@@ -168,7 +168,7 @@ GROUP BY t1.isbn;
 SQL
         );
         $books->execute(array(':isbn' => $isbn));
-        return $books->fetchAll(\PDO::FETCH_OBJ);
+        return $books->fetch(\PDO::FETCH_OBJ);
     }
 
     /**

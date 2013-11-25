@@ -1,6 +1,6 @@
-<?php if (!empty($header)): ?><h2><?= $header ?></h2><?php endif; ?>
+<h2>Cart</h2>
 <?php if (count($books) == 0): ?>
-<p>No books found.</p>
+<p>Your cart is empty.</p>
 <?php else: ?>
 <form action="<?= ROOT_URL ?>/cart" method="post">
     <table class="books">
@@ -11,7 +11,7 @@
             <th>Stock</th>
             <th>Price</th>
             <th>Course(s):</th>
-            <th>Order</th>
+            <th>Quantity</th>
         </tr>
     <?php foreach($books as $book): ?>
         <tr>
@@ -23,12 +23,13 @@
             <td><?= str_replace(', ', '<br>', $book->courses) ?></td>
             <td>
                 <center>
-                    <input type="checkbox" name="books[]" value="<?= $book->isbn ?>">
+                    <input type="text" name="book_quantities[]" value="<?= $book->quantity ?>" style="width: 2em;">
                 </center>
             </td>
         </tr>
     <?php endforeach; ?>
     </table>
-    <div class="form_buttons"><input type="submit" name="<?= $submit_name ?>" value="<?= $submit_label ?>"></div>
+    <div class="form_buttons"><input type="submit" name="cart_empty" value="Empty cart"> <input type="submit" name="cart_quantities" value="Update Quantities"></div>
+    <div class="form_buttons"><input type="submit" name="order" value="Place Order"></div>
 </form>
 <?php endif; ?>

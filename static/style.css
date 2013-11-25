@@ -143,3 +143,7 @@ div#main a:hover
 {
 }
 
+div.form_buttons
+{
+    text-align: right;
+}

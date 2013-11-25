@@ -2,7 +2,7 @@
 
 use \wanshitong\controllers\Controller;
 use \wanshitong\models\Books;
-use \wanshitong\views\BooksView;
+use \wanshitong\views\FilterableBooksView;
 
 /**
  * A request for a book list.
@@ -56,7 +56,7 @@ class BooksController extends Controller
 
         $authors = $this->authors_repository->getAuthors();
 
-        $view = new BooksView($books, $departments, $department, $courses, $course, $sections, $section, $authors, $author);
+        $view = new FilterableBooksView($books, $departments, $department, $courses, $course, $sections, $section, $authors, $author);
         $view->render();
     }
 }

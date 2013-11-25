@@ -1,5 +1,6 @@
 <?php namespace wanshitong\views;
 
+use \wanshitong\models\Cart;
 use \wanshitong\models\Staff;
 use \wanshitong\views\View;
 use \wanshitong\TemplateManager;
@@ -47,7 +48,7 @@ class PageView implements View
 
         $page = TemplateManager::getDefaultTemplateManager()->load('page', array(
                 'page_title' => $this->title,
-                'cart_size' => 0,
+                'cart_size' => Cart::size(),
                 'staff_navigation' => $staff_navigation,
                 'book_navigation' => $this->book_navigation,
                 'content' => $this->content
