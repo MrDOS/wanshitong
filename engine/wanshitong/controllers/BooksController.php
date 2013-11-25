@@ -36,12 +36,12 @@ class BooksController extends Controller
      */
     public function get($get)
     {
-        $department = (isset($get['department']) && !empty($get['department'])) ? $get['department'] : null;
-        $course = (isset($get['course']) && !empty($get['course'])) ? $get['course'] : null;
-        $section = (isset($get['section']) && !empty($get['section'])) ? $get['section'] : null;
-        $author = (isset($get['author']) && !empty($get['author'])) ? $get['author'] : null;
+        $department = (isset($get['department']) && !empty($get['department'])) ? preg_replace('/[^A-Za-z0-9\-., ]/', '', $get['department']) : null;
+        $course = (isset($get['course']) && !empty($get['course'])) ? preg_replace('/[^A-Za-z0-9\-., ]/', '', $get['course']) : null;
+        $section = (isset($get['section']) && !empty($get['section'])) ? preg_replace('/[^A-Za-z0-9\-., ]/', '', $get['section']) : null;
+        $author = (isset($get['author']) && !empty($get['author'])) ? preg_replace('/[^A-Za-z0-9\-., ]/', '', $get['author']) : null;
 
-        if ($author)
+        if ($author !== null)
             $books = $this->books_repository->getStockedBooksByAuthor($author);
         else
             $books = $this->books_repository->getStockedBooks($department, $course, $section);

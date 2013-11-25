@@ -34,6 +34,7 @@ use \wanshitong\controllers\ErrorController;
 use \wanshitong\controllers\LoginController;
 use \wanshitong\controllers\LogoutController;
 use \wanshitong\controllers\MessageController;
+use \wanshitong\controllers\StudentBooksController;
 use \wanshitong\models\Authors;
 use \wanshitong\models\Books;
 use \wanshitong\models\Departments;
@@ -48,18 +49,9 @@ Router::route(array(
     '/books/?' => function() use ($db) {
             return new BooksController(new Books($db), new Departments($db), new Authors($db));
         },
-    '/books/([A-Z]{4})/?' => array(function() use ($db) {
-            return new BooksController(new Books($db), new Departments($db), new Authors($db));
-        }, array('department')),
-    '/books/([A-Z]{4})/([0-4][0-9]{2}[0136])/?' => array(function() use ($db) {
-            return new BooksController(new Books($db), new Departments($db), new Authors($db));
-        }, array('department', 'course')),
-    '/books/([A-Z]{4})/([0-4][0-9]{2}[0136])/([A-Z][0-9])/?' => array(function() use ($db) {
-            return new BooksController(new Books($db), new Departments($db), new Authors($db));
-        }, array('department', 'course', 'section')),
-    '/books/author/(.+?)/?' => array(function() use ($db) {
-            return new BooksController(new Books($db), new Departments($db), new Authors($db));
-        }, array('author')),
+    '/books/student/?' => function() use ($db) {
+            return new StudentBooksController(new Books($db), new Departments($db), new Authors($db));
+        },
     '/login/?' => function() use ($db) {
             return new LoginController(new Staff($db));
         },
