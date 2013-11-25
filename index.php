@@ -32,6 +32,8 @@ session_start();
 use \wanshitong\controllers\BooksController;
 use \wanshitong\controllers\CartController;
 use \wanshitong\controllers\ErrorController;
+use \wanshitong\controllers\OrderController;
+use \wanshitong\controllers\OrdersController;
 use \wanshitong\controllers\LoginController;
 use \wanshitong\controllers\LogoutController;
 use \wanshitong\controllers\MessageController;
@@ -58,6 +60,12 @@ Router::route(array(
     '/cart/?' => function() use ($db) {
             return new CartController(new Books($db), new Orders($db), new Students($db));
         },
+    '/orders/?' => function() use ($db) {
+            return new OrdersController(new Orders($db));
+        },
+    '/order/([0-9]+)/?' => array(function() use ($db) {
+            return new OrderController(new Orders($db), new Students($db), new Books($db));
+        }, array('order')),
     '/login/?' => function() use ($db) {
             return new LoginController(new Staff($db));
         },

@@ -27,6 +27,74 @@ class Orders implements Repository
     }
 
     /**
+     * Get all outstanding orders.
+     *
+     * @return stdClass[] all outstanding orders
+     */
+    public function getOutstandingOrders()
+    {
+        $order = $this->db->prepare(<<<SQL
+SELECT orders.order_id, orders.order_date, orders.arrival_date, orders.student_number
+FROM orders
+WHERE orders.arrival_date IS NULL
+ORDER BY orders.order_date;
+SQL
+        );
+        $order->execute();
+        return $order->fetchAll(\PDO::FETCH_OBJ);
+    }
+
+    /**
+     * Get all outstanding orders.
+     *
+     * @return stdClass[] all outstanding orders
+     */
+    public function getFulfilledOrders()
+    {
+        $order = $this->db->prepare(<<<SQL
+SELECT orders.order_id, orders.order_date, orders.arrival_date, orders.student_number
+FROM orders
+WHERE orders.arrival_date IS NOT NULL
+ORDER BY orders.order_date;
+SQL
+        );
+        $order->execute();
+        return $order->fetchAll(\PDO::FETCH_OBJ);
+    }
+
+    /**
+     * Get an order by its ID.
+     *
+     * @return stdClass the order
+     */
+    public function getOrderByID($order_id)
+    {
+        $order = $this->db->prepare(<<<SQL
+SELECT orders.order_id, orders.order_date, orders.arrival_date, orders.student_number
+FROM orders
+WHERE orders.order_id = :order_id
+ORDER BY orders.order_date;
+SQL
+        );
+        $order->execute(array(':order_id' => $order_id));
+        return $order->fetch(\PDO::FETCH_OBJ);
+    }
+
+    /**
+     * Fulfill an order by its ID.
+     *
+     * @param int $order_id the order ID
+     */
+    public function fulfillOrder($order_id)
+    {
+        $order = $this->db->prepare(<<<SQL
+UPDATE orders SET arrival_date = NOW() WHERE orders.order_id = :order_id;
+SQL
+        );
+        $order->execute(array(':order_id' => $order_id));
+}
+
+    /**
      * Insert an order.
      *
      * @param string $student_number the student number associated with the order
@@ -37,14 +105,14 @@ class Orders implements Repository
         if (count($books) == 0)
             throw new \Exception('Orders must contain at least one book');
 
-        $quote = $this->db->prepare(<<<SQL
+        $order = $this->db->prepare(<<<SQL
 INSERT INTO orders
 (orders.order_date, orders.arrival_date, orders.student_number)
 VALUES (NOW(), NULL, :student_number);
 SQL
         );
-        $quote->execute(array(':student_number' => $student_number));
-        if ($quote === false)
+        $order->execute(array(':student_number' => $student_number));
+        if ($order === false)
             throw new \Exception('Could not store order');
         $order_id = $this->db->lastInsertId();
 

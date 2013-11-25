@@ -16,13 +16,14 @@ class BooksView extends PageView
      *
      * @param array $books the books to display
      */
-    public function __construct($books, $header = null, $submit_name = 'cart_add', $submit_label = 'Add to Cart')
+    public function __construct($books, $header = null, $can_order = true, $submit_name = 'cart_add', $submit_label = 'Add to Cart')
     {
         $content = TemplateManager::getDefaultTemplateManager()->load('books', array(
                 'books' => $books,
                 'header' => $header,
                 'submit_name' => $submit_name,
-                'submit_label' => $submit_label));
+                'submit_label' => $submit_label,
+                'can_order' => $can_order));
         parent::__construct('Books', $content);
     }
 }

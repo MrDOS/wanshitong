@@ -191,15 +191,45 @@ LEFT JOIN sections t5 ON t5.section_number = t4.section_number
 LEFT JOIN courses t6 ON t6.course_number = t4.course_number
 LEFT JOIN departments t7 ON t7.department_code = t4.department_code
 LEFT JOIN student_sections t8 ON t8.department_code = t7.department_code
+WHERE t1.stocked = true
 AND t8.section_number = t5.section_number
 AND t8.course_number = t6.course_number
-WHERE t1.stocked = true
 AND t8.student_number = :student_number
 GROUP BY t1.isbn
 ORDER BY t1.title;
 SQL
         );
         $books->execute(array(':student_number' => $student_number));
+        return $books->fetchAll(\PDO::FETCH_OBJ);
+    }
+
+    /**
+     * Get all books included in an order.
+     *
+     * @param string $order_id the order ID
+     * @return stdClass[] all books included in the order
+     */
+    public function getBooksByOrder($order_id)
+    {
+        $books = $this->db->prepare(<<<SQL
+SELECT t1.isbn, t1.title, t1.price,
+GROUP_CONCAT(DISTINCT t3.display_name ORDER BY t3.display_name SEPARATOR ', ') AS authors,
+GROUP_CONCAT(DISTINCT CONCAT_WS(' ', t7.department_code, t6.course_number, t5.slot) ORDER BY t7.department_code, t6.course_number, t5.slot SEPARATOR ', ') AS courses
+FROM books t1
+LEFT JOIN book_authors t2 ON t2.isbn = t1.isbn
+LEFT JOIN authors t3 ON t3.author_id = t2.author_id
+LEFT JOIN section_books t4 ON t4.isbn = t1.isbn
+LEFT JOIN sections t5 ON t5.section_number = t4.section_number
+LEFT JOIN courses t6 ON t6.course_number = t4.course_number
+LEFT JOIN departments t7 ON t7.department_code = t4.department_code
+LEFT JOIN order_books t8 ON t8.isbn = t1.isbn
+WHERE t1.stocked = true
+AND t8.order_id = :order_id
+GROUP BY t1.isbn
+ORDER BY t1.title;
+SQL
+        );
+        $books->execute(array(':order_id' => $order_id));
         return $books->fetchAll(\PDO::FETCH_OBJ);
     }
 

@@ -81,7 +81,7 @@ class CartController extends Controller
             $order_id = $this->orders_repository->insertOrder($post['student_number'], Cart::getBooks());
             Cart::emptyCart();
 
-            $view = new MessageView('Order submitted', 'Your order number is <strong>' . $order_id . '</strong>. Please make a note of this; it will be required to pick up your order.');
+            $view = new MessageView('Order submitted', 'Your order number is <strong>#' . $order_id . '</strong>. Please make a note of this; it will be required to pick up your order.');
             return $view->render();
         }
 

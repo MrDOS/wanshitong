@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Order #<?= $order->order_id ?></title>
+        <style type="text/css">
+        table
+        {
+            border-collapse: collapse;
+        }
+
+        table tr
+        {
+            vertical-align: top;
+        }
+
+        td, th
+        {
+            border: 1px solid #000000;
+            padding: .5em;
+        }
+        </style>
+    </head>
+    <body>
+        <h1>Order #<?= $order->order_id ?></h1>
+        <p><strong>For:</strong> <?= $student->student_number ?><?php if ($student->email): ?> (<?= $student->email ?>)<?php endif; ?></p>
+        <p><strong>Placed:</strong> <?= $order->order_date ?><?php if ($order->arrival_date): ?>; <strong>arrived:</strong> <?= $order->arrival_date ?><?php endif; ?></p>
+        <?= $books ?>
+    </body>
+</html>
