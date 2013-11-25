@@ -41,6 +41,7 @@ use \wanshitong\models\Books;
 use \wanshitong\models\Departments;
 use \wanshitong\models\Orders;
 use \wanshitong\models\Staff;
+use \wanshitong\models\Students;
 use \wanshitong\Router;
 
 /* Configure routes. */
@@ -55,7 +56,7 @@ Router::route(array(
             return new StudentBooksController(new Books($db), new Departments($db), new Authors($db));
         },
     '/cart/?' => function() use ($db) {
-            return new CartController(new Books($db), new Orders($db));
+            return new CartController(new Books($db), new Orders($db), new Students($db));
         },
     '/login/?' => function() use ($db) {
             return new LoginController(new Staff($db));

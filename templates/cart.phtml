@@ -2,6 +2,7 @@
 <?php if (count($books) == 0): ?>
 <p>Your cart is empty.</p>
 <?php else: ?>
+<?php $total = 0; ?>
 <form action="<?= ROOT_URL ?>/cart" method="post">
     <table class="books">
         <tr>
@@ -27,9 +28,23 @@
                 </center>
             </td>
         </tr>
+        <?php $total += $book->price; ?>
     <?php endforeach; ?>
+        <tr>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+            <td colspan="2">Subtotal: $<?= sprintf("%d.%02d", $total / 100, $total % 100) ?></td>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
     </table>
+    <input style="overflow: visible !important; height: 0 !important; width: 0 !important; margin: 0 !important; border: 0 !important; padding: 0 !important; display: block !important;" type="submit" name="cart_quantities">
     <div class="form_buttons"><input type="submit" name="cart_empty" value="Empty cart"> <input type="submit" name="cart_quantities" value="Update Quantities"></div>
-    <div class="form_buttons"><input type="submit" name="order" value="Place Order"></div>
+    <fieldset>
+        <legend>Student Details</legend>
+        <label for="student_number">Student Number:</label> <input type="text" name="student_number" id="student_number"><br>
+        <input type="submit" name="order" value="Place Order">
+    </fieldset>
 </form>
 <?php endif; ?>

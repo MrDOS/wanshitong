@@ -147,3 +147,8 @@ div.form_buttons
 {
     text-align: right;
 }
+
+fieldset
+{
+    border: 1px solid #000000;
+}
