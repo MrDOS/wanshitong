@@ -2,6 +2,7 @@
 <?php if (count($books) == 0): ?>
 <p>No books found.</p>
 <?php else: ?>
+<?php $show_quantity = property_exists($books[0], 'quantity'); ?>
 <form action="<?= ROOT_URL ?>/cart" method="post">
     <table class="books">
         <tr>
@@ -10,6 +11,7 @@
             <th>ISBN</th>
             <th>Stock</th>
             <th>Price</th>
+            <?php if ($show_quantity): ?><th>Quantity</th><?php endif; ?>
             <th>Course(s):</th>
             <?php if ($can_order): ?><th>Order</th><?php endif; ?>
         </tr>
@@ -20,6 +22,7 @@
             <td><?= sprintf("%s-%s-%s-%s-%s", substr($book->isbn, 0, 3), substr($book->isbn, 3, 1), substr($book->isbn, 4, 2), substr($book->isbn, 6, 6), substr($book->isbn, 12, 1)) ?></td>
             <td>In-Stock</td>
             <td>$<?= sprintf("%d.%02d", $book->price / 100, $book->price % 100) ?></td>
+            <?php if ($show_quantity): ?><td><?= $book->quantity ?></td><?php endif; ?>
             <td><?= str_replace(', ', '<br>', $book->courses) ?></td>
             <?php if ($can_order): ?>
             <td>

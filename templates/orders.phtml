@@ -10,7 +10,7 @@
     </tr>
 <?php foreach($orders as $order): ?>
     <tr>
-        <td><a href="<?= ROOT_URL ?>/order/<?= $order->order_id ?>"><?= $order->order_id ?></a></td>
+        <td><a href="<?= ROOT_URL ?>/order/<?= $order->order_id ?>" target="_blank"><?= $order->order_id ?></a></td>
         <td><?= $order->order_date ?></td>
         <td><form action="<?= ROOT_URL ?>/orders" method="post"><input type="hidden" name="order_id" value="<?= $order->order_id ?>"><input type="submit" name="order_fulfill" value="Fulfill"></form></td>
     </tr>
@@ -30,7 +30,7 @@
     </tr>
 <?php foreach($fulfilled_orders as $order): ?>
     <tr>
-        <td><a href="<?= ROOT_URL ?>/order/<?= $order->order_id ?>"><?= $order->order_id ?></a></td>
+        <td><a href="<?= ROOT_URL ?>/order/<?= $order->order_id ?>" target="_blank"><?= $order->order_id ?></a></td>
         <td><?= $order->order_date ?></td>
         <td><?= $order->arrival_date ?></td>
     </tr>
