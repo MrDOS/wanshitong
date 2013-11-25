@@ -1,8 +1,8 @@
 <?php namespace wanshitong\controllers;
 
-use wanshitong\controllers\Controller;
-use wanshitong\views\BooksView;
-use wanshitong\models\Books;
+use \wanshitong\controllers\Controller;
+use \wanshitong\models\Books;
+use \wanshitong\views\BooksView;
 
 /**
  * A request for a book list.

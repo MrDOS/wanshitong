@@ -24,13 +24,20 @@ spl_autoload_register(array(new \wanshitong\Autoloader(__DIR__ . DIRECTORY_SEPAR
 $db = new PDO('mysql:dbname=' . DB_NAME . ';host=' . DB_HOST, DB_USER, DB_PASS);
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+/* We're pretty much guaranteed to need a session for cart and login
+ * functionality. */
+session_start();
+
 /* Use statements to make the routes a little more clear. */
 use \wanshitong\controllers\BooksController;
 use \wanshitong\controllers\ErrorController;
+use \wanshitong\controllers\LoginController;
+use \wanshitong\controllers\LogoutController;
 use \wanshitong\controllers\MessageController;
 use \wanshitong\models\Authors;
 use \wanshitong\models\Books;
 use \wanshitong\models\Departments;
+use \wanshitong\models\Staff;
 use \wanshitong\Router;
 
 /* Configure routes. */
@@ -53,6 +60,12 @@ Router::route(array(
     '/books/author/(.+?)/?' => array(function() use ($db) {
             return new BooksController(new Books($db), new Departments($db), new Authors($db));
         }, array('author')),
+    '/login/?' => function() use ($db) {
+            return new LoginController(new Staff($db));
+        },
+    '/logout/?' => function() use ($db) {
+            return new LogoutController();
+        },
     '.*' => new ErrorController()
 ));
 

@@ -1,5 +1,6 @@
 <?php namespace wanshitong\views;
 
+use \wanshitong\models\Staff;
 use \wanshitong\views\View;
 use \wanshitong\TemplateManager;
 
@@ -39,10 +40,15 @@ class PageView implements View
         if ($this->book_navigation == null)
             $this->book_navigation = '<center><a href="' . ROOT_URL . '/books">Search for Books?</a></center>';
 
+        if (!Staff::isLoggedIn())
+            $staff_navigation = TemplateManager::getDefaultTemplateManager()->load('login');
+        else
+            $staff_navigation = TemplateManager::getDefaultTemplateManager()->load('staff_menu');
+
         $page = TemplateManager::getDefaultTemplateManager()->load('page', array(
                 'page_title' => $this->title,
                 'cart_size' => 0,
-                'staff_navigation' => '',
+                'staff_navigation' => $staff_navigation,
                 'book_navigation' => $this->book_navigation,
                 'content' => $this->content
             ));
