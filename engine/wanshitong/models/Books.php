@@ -51,7 +51,7 @@ class Books implements Repository
     public function getBooks($department = null, $course = null, $section = null)
     {
         $query = <<<SQL
-SELECT t1.isbn, t1.title, t1.stocked, t1.price,
+SELECT t1.isbn, t1.title, t1.stocked, t1.price, t1.quantity,
 GROUP_CONCAT(DISTINCT t3.display_name ORDER BY t3.display_name SEPARATOR ', ') AS authors,
 GROUP_CONCAT(DISTINCT CONCAT_WS(' ', t7.department_code, t6.course_number, t5.slot) ORDER BY t7.department_code, t6.course_number, t5.slot SEPARATOR ', ') AS courses
 FROM books t1
@@ -108,7 +108,7 @@ SQL;
     public function getBooksByAuthor($author)
     {
         $query = <<<SQL
-SELECT t1.isbn, t1.title, t1.stocked, t1.price,
+SELECT t1.isbn, t1.title, t1.stocked, t1.price, t1.quantity,
 GROUP_CONCAT(DISTINCT t3.display_name ORDER BY t3.display_name SEPARATOR ', ') AS authors,
 GROUP_CONCAT(DISTINCT CONCAT_WS(' ', t7.department_code, t6.course_number, t5.slot) ORDER BY t7.department_code, t6.course_number, t5.slot SEPARATOR ', ') AS courses
 FROM books t1
@@ -145,7 +145,7 @@ SQL;
     public function getBookByISBN($isbn)
     {
         $books = $this->db->prepare(<<<SQL
-SELECT t1.isbn, t1.title, t1.stocked, t1.price,
+SELECT t1.isbn, t1.title, t1.stocked, t1.price, t1.quantity,
 GROUP_CONCAT(DISTINCT t3.display_name ORDER BY t3.display_name SEPARATOR ', ') AS authors,
 GROUP_CONCAT(DISTINCT CONCAT_WS(' ', t7.department_code, t6.course_number, t5.slot) ORDER BY t7.department_code, t6.course_number, t5.slot SEPARATOR ', ') AS courses
 FROM books t1

@@ -2,7 +2,6 @@
 <?php if (count($books) == 0): ?>
 <p>No books found.</p>
 <?php else: ?>
-<?php $show_quantity = property_exists($books[0], 'quantity'); ?>
 <form action="<?= ROOT_URL ?>/cart" method="post">
     <table class="books">
         <tr>

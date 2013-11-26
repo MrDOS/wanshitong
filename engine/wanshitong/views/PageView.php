@@ -27,6 +27,14 @@ class PageView implements View
     }
 
     /**
+     * Replace the view content.
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
+
+    /**
      * Set the book navigation bar.
      *
      * @param string|\wanshitong\Template $book_navigation the navigation bar
