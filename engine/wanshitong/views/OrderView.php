@@ -40,7 +40,8 @@ class OrderView implements View
                 'header' => null,
                 'submit_name' => null,
                 'submit_label' => null,
-                'can_order' => false
+                'can_order' => false,
+                'show_quantity' => true
             ))));
         $content->render();
     }
