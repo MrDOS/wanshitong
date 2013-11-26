@@ -1,4 +1,4 @@
-<h2>Add Book</h2>
+<h3>Add Book</h3>
 <form action="<?= ROOT_URL ?>/management" method="post">
     <label for="add_isbn">ISBN:</label>
     <input type="text" name="isbn" id="add_isbn"><br>
@@ -9,7 +9,7 @@
     <input type="submit" name="manage_add" value="Add Book">
 </form>
 
-<h2>Update Book Stockability</h2>
+<h3>Update Book Stockability</h3>
 <form action="<?= ROOT_URL ?>/management" method="post">
     <label for="stock_isbn">ISBN:</label>
     <input type="text" name="isbn" id="stock_isbn"><br>
@@ -21,16 +21,27 @@
     <input type="submit" name="manage_stocked" value="Update Stockability">
 </form>
 
-<h2>Add Author</h2>
+<h3>Add Author</h3>
 <form action="<?= ROOT_URL ?>/management" method="post">
     <label for="author_given_name">Given name:</label>
     <input type="text" name="given_name" id="author_given_name"><br>
     <label for="author_family_name">Family name:</label>
     <input type="text" name="family_name" id="author_family_name"><br>
-    <input type="submit" name="manage_author" value="Add Author">
+    <input type="submit" name="manage_author_add" value="Add Author">
 </form>
 
-<h2>Associate Author with Book</h2>
+<h3>Remove Author</h3>
+<form action="<?= ROOT_URL ?>/management" method="post">
+    <label for="remove_author">Author:</label>
+    <select name="author_id" id="remove_author">
+        <?php foreach($authors as $author): ?>
+        <option value="<?= $author->author_id ?>"><?= $author->sort_name ?></option>
+        <?php endforeach; ?>
+    </select><br>
+    <input type="submit" name="manage_author_remove" value="Remove Author">
+</form>
+
+<h3>Associate Author with Book</h3>
 <form action="<?= ROOT_URL ?>/management" method="post">
     <label for="book_author_isbn">ISBN:</label>
     <input type="text" name="isbn" id="book_author_isbn"><br>
@@ -44,7 +55,7 @@
     <input type="submit" name="manage_book_author_remove" value="Remove Author from Book">
 </form>
 
-<h2>Associate Book with Section</h2>
+<h3>Associate Book with Section</h3>
 <form action="<?= ROOT_URL ?>/management" method="post">
     <label for="book_section_isbn">ISBN:</label>
     <input type="text" name="isbn" id="book_section_isbn"><br>

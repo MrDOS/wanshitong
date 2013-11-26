@@ -70,12 +70,18 @@ class ManagementController extends Controller
 
             $this->books_repository->setStocked($isbn, ($post['stocked'] === 'true') ? 1 : 0);
         }
-        elseif (isset($post['manage_author']))
+        elseif (isset($post['manage_author_add']))
         {
             $given_name = preg_replace('/[^A-Za-z0-9\-. ]/', '', $post['given_name']);
             $family_name = preg_replace('/[^A-Za-z0-9\-. ]/', '', $post['family_name']);
 
             $this->authors_repository->insertAuthor($given_name, $family_name);
+        }
+        elseif (isset($post['manage_author_remove']))
+        {
+            $author_id = preg_replace('/[^0-9]/', '', $post['author_id']);
+
+            $this->authors_repository->deleteAuthor($author_id);
         }
         elseif (isset($post['manage_book_author_add']))
         {

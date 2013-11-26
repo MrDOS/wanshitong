@@ -73,6 +73,24 @@ SQL
     }
 
     /**
+     * Delete an author.
+     *
+     * @param string $author_id the author ID
+     */
+    public function deleteAuthor($author_id)
+    {
+        $authors = $this->db->prepare(<<<SQL
+DELETE FROM book_authors
+WHERE book_authors.author_id = :author_id;
+
+DELETE FROM authors
+WHERE authors.author_id = :author_id;
+SQL
+        );
+        $authors->execute(array(':author_id' => $author_id));
+    }
+
+    /**
      * Associate an author with a book.
      *
      * @param int $author_id the author ID
