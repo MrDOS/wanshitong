@@ -1,6 +1,7 @@
 <?php namespace wanshitong\controllers;
 
 use \wanshitong\controllers\Controller;
+use \wanshitong\models\Staff;
 
 /**
  * Handle user logouts.
@@ -18,7 +19,7 @@ class LogoutController extends Controller
      */
     public function get($get)
     {
-        session_destroy();
+        Staff::logOut();
         header('Location: ' . ROOT_URL);
     }
 }

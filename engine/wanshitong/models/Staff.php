@@ -53,4 +53,22 @@ SQL
     {
         return (isset($_SESSION['user']));
     }
+
+    /**
+     * Set the logged in user.
+     *
+     * @param stdClass $user the user
+     */
+    public static function setLoggedInUser($user)
+    {
+        $_SESSION['user'] = $user;
+    }
+
+    /**
+     * Log the current user out.
+     */
+    public static function logOut()
+    {
+        unset($_SESSION['user']);
+    }
 }

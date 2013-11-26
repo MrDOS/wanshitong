@@ -66,7 +66,7 @@ class LoginController extends Controller
             return $view->render();
         }
 
-        $_SESSION['user'] = $staff;
+        Staff::setLoggedInUser($staff);
         header('Location: ' . ROOT_URL);
     }
 }
