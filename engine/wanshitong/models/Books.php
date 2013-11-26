@@ -118,6 +118,7 @@ LEFT JOIN section_books t4 ON t4.isbn = t1.isbn
 LEFT JOIN sections t5 ON t5.section_number = t4.section_number
 LEFT JOIN courses t6 ON t6.course_number = t4.course_number
 LEFT JOIN departments t7 ON t7.department_code = t4.department_code
+
 SQL;
 
         if ($this->show_unstocked)
