@@ -1,0 +1,19 @@
+-- COMP 3753 -- Project Part #3: Database Creation
+-- Samuel Coleman, 100105709
+-- Kate-Lynn MacPhail, 100096539
+-- Nicholas Wetmore, 100104702
+--
+-- Data population.
+
+LOAD DATA LOCAL INFILE 'departments.csv' INTO TABLE departments FIELDS TERMINATED BY '|';
+LOAD DATA LOCAL INFILE 'books.csv' INTO TABLE books FIELDS TERMINATED BY '|';
+LOAD DATA LOCAL INFILE 'authors.csv' INTO TABLE authors FIELDS TERMINATED BY '|';
+LOAD DATA LOCAL INFILE 'staff.csv' INTO TABLE staff FIELDS TERMINATED BY '|';
+LOAD DATA LOCAL INFILE 'students.csv' INTO TABLE students FIELDS TERMINATED BY '|';
+LOAD DATA LOCAL INFILE 'courses.csv' INTO TABLE courses FIELDS TERMINATED BY '|';
+LOAD DATA LOCAL INFILE 'sections.csv' INTO TABLE sections FIELDS TERMINATED BY '|';
+LOAD DATA LOCAL INFILE 'orders.csv' INTO TABLE orders FIELDS TERMINATED BY '|';
+LOAD DATA LOCAL INFILE 'section_books.csv' INTO TABLE section_books FIELDS TERMINATED BY '|';
+LOAD DATA LOCAL INFILE 'book_authors.csv' INTO TABLE book_authors FIELDS TERMINATED BY '|';
+LOAD DATA LOCAL INFILE 'order_books.csv' INTO TABLE order_books FIELDS TERMINATED BY '|';
+LOAD DATA LOCAL INFILE 'student_sections.csv' INTO TABLE student_sections FIELDS TERMINATED BY '|';
