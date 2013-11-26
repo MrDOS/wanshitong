@@ -64,6 +64,13 @@ class ManagementController extends Controller
 
             $this->books_repository->insertBook($isbn, $title, 0, $price);
         }
+        elseif (isset($post['manage_stock']))
+        {
+            $isbn = preg_replace('/[^0-9]/', '', $post['isbn']);
+            $stock = preg_replace('/[^0-9]/', '', $post['quantity']);
+
+            $this->books_repository->setBookStock($isbn, $stock);
+        }
         elseif (isset($post['manage_stocked']))
         {
             $isbn = preg_replace('/[^0-9]/', '', $post['isbn']);

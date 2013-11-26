@@ -1,4 +1,7 @@
-<h3>Add Book</h3>
+<h2>Books</h2>
+
+<h3>Add or Update Book</h3>
+<p>If the given ISBN does not already exist, a new book record will be created. Otherwise, the title and price of the existing record will be updated.</p>
 <form action="<?= ROOT_URL ?>/management" method="post">
     <label for="add_isbn">ISBN:</label>
     <input type="text" name="isbn" id="add_isbn"><br>
@@ -9,17 +12,31 @@
     <input type="submit" name="manage_add" value="Add Book">
 </form>
 
-<h3>Update Book Stockability</h3>
+<h3>Update Book Stock</h3>
 <form action="<?= ROOT_URL ?>/management" method="post">
     <label for="stock_isbn">ISBN:</label>
     <input type="text" name="isbn" id="stock_isbn"><br>
-    <label for="stock_state">Stockability:</label>
-    <select name="stocked">
+    <label for="stock_quantity">Quantity:</label>
+    <input type="text" name="quantity" id="stock_quantity"><br>
+    <input type="submit" name="manage_stock" value="Update Stock">
+</form>
+
+<h3>Update Book Stockability</h3>
+<p>Books which are not stocked are not visible outside of the staff interface and may not be ordered.</p>
+<form action="<?= ROOT_URL ?>/management" method="post">
+    <label for="stocked_isbn">ISBN:</label>
+    <input type="text" name="isbn" id="stocked_isbn"><br>
+    <label for="stocked_state">Stockability:</label>
+    <select name="stocked" id="stocked_state">
         <option value="true">Stocked</option>
         <option value="false">Not Stocked</option>
     </select><br>
     <input type="submit" name="manage_stocked" value="Update Stockability">
 </form>
+
+<hr>
+
+<h2>Authors</h2>
 
 <h3>Add Author</h3>
 <form action="<?= ROOT_URL ?>/management" method="post">
@@ -54,6 +71,10 @@
     <input type="submit" name="manage_book_author_add" value="Add Author to Book">
     <input type="submit" name="manage_book_author_remove" value="Remove Author from Book">
 </form>
+
+<hr>
+
+<h2>Sections</h2>
 
 <h3>Associate Book with Section</h3>
 <form action="<?= ROOT_URL ?>/management" method="post">
