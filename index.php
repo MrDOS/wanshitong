@@ -31,6 +31,7 @@ session_start();
 /* Use statements to make the routes a little more clear. */
 use \wanshitong\controllers\BooksController;
 use \wanshitong\controllers\CartController;
+use \wanshitong\controllers\InventoryController;
 use \wanshitong\controllers\ErrorController;
 use \wanshitong\controllers\OrderController;
 use \wanshitong\controllers\OrdersController;
@@ -56,6 +57,9 @@ Router::route(array(
         },
     '/books/student/?' => function() use ($db) {
             return new StudentBooksController(new Books($db), new Departments($db), new Authors($db));
+        },
+    '/inventory/?' => function() use ($db) {
+            return new InventoryController(new Books($db), new Departments($db), new Authors($db));
         },
     '/cart/?' => function() use ($db) {
             return new CartController(new Books($db), new Orders($db), new Students($db));

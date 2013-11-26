@@ -20,7 +20,7 @@
             <td><?= $book->title ?></td>
             <td><?= str_replace(', ', '<br />', $book->authors) ?></td>
             <td><?= sprintf("%s-%s-%s-%s-%s", substr($book->isbn, 0, 3), substr($book->isbn, 3, 1), substr($book->isbn, 4, 2), substr($book->isbn, 6, 6), substr($book->isbn, 12, 1)) ?></td>
-            <td>In-Stock</td>
+            <td><?= (($book->stocked) ? 'Stocked' : 'Not Stocked') ?></td>
             <td>$<?= sprintf("%d.%02d", $book->price / 100, $book->price % 100) ?></td>
             <?php if ($show_quantity): ?><td><?= $book->quantity ?></td><?php endif; ?>
             <td><?= str_replace(', ', '<br>', $book->courses) ?></td>

@@ -1,7 +1,9 @@
 <?php namespace wanshitong\controllers;
 
 use \wanshitong\controllers\Controller;
+use \wanshitong\models\Authors;
 use \wanshitong\models\Books;
+use \wanshitong\models\Departments;
 use \wanshitong\views\FilterableBooksView;
 
 /**
@@ -20,9 +22,11 @@ class BooksController extends Controller
     /**
      * Construct the controller.
      *
-     * @param \wanshitong\models\Books $bookRepository a book repository
+     * @param \wanshitong\models\Books $books_epository
+     * @param \wanshitong\models\Departments $departments_repository
+     * @param \wanshitong\models\Authors $authors_repository
      */
-    public function __construct($books_repository, $departments_repository, $authors_repository)
+    public function __construct(Books $books_repository, Departments $departments_repository, Authors $authors_repository)
     {
         $this->books_repository = $books_repository;
         $this->departments_repository = $departments_repository;
@@ -42,9 +46,9 @@ class BooksController extends Controller
         $author = (isset($get['author']) && !empty($get['author'])) ? preg_replace('/[^A-Za-z0-9\-., ]/', '', $get['author']) : null;
 
         if ($author !== null)
-            $books = $this->books_repository->getStockedBooksByAuthor($author);
+            $books = $this->books_repository->getBooksByAuthor($author);
         else
-            $books = $this->books_repository->getStockedBooks($department, $course, $section);
+            $books = $this->books_repository->getBooks($department, $course, $section);
 
         $departments = $this->departments_repository->getDepartments();
         $courses = array();

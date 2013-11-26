@@ -17,6 +17,11 @@ class Books implements Repository
     private $db;
 
     /**
+     * @var boolean
+     */
+    private $show_unstocked;
+
+    /**
      * Construct the repository.
      *
      * @param \PDO $db the database
@@ -24,20 +29,29 @@ class Books implements Repository
     public function __construct(\PDO $db)
     {
         $this->db = $db;
+        $this->show_unstocked = false;
     }
 
     /**
-     * Get all stocked books. Optionally limit by department, course, and section.
+     * Set whether or not unstocked books should be listed.
+     */
+    public function setShowUnstocked($show_unstocked)
+    {
+        $this->show_unstocked = ($show_unstocked) ? true : false;
+    }
+
+    /**
+     * Get all books. Optionally limit by department, course, and section.
      *
      * @param string $department the department code (e.g., 'COMP', 'MATH')
      * @param string $course the course code (e.g., '3753', '1013')
      * @param string $section the section slot (e.g., 'X1', 'A1')
      * @return stdClass[] all stocked books
      */
-    public function getStockedBooks($department = null, $course = null, $section = null)
+    public function getBooks($department = null, $course = null, $section = null)
     {
         $query = <<<SQL
-SELECT t1.isbn, t1.title, t1.price,
+SELECT t1.isbn, t1.title, t1.stocked, t1.price,
 GROUP_CONCAT(DISTINCT t3.display_name ORDER BY t3.display_name SEPARATOR ', ') AS authors,
 GROUP_CONCAT(DISTINCT CONCAT_WS(' ', t7.department_code, t6.course_number, t5.slot) ORDER BY t7.department_code, t6.course_number, t5.slot SEPARATOR ', ') AS courses
 FROM books t1
@@ -47,37 +61,34 @@ LEFT JOIN section_books t4 ON t4.isbn = t1.isbn
 LEFT JOIN sections t5 ON t5.section_number = t4.section_number
 LEFT JOIN courses t6 ON t6.course_number = t4.course_number
 LEFT JOIN departments t7 ON t7.department_code = t4.department_code
-WHERE t1.stocked = true
 
 SQL;
+
+        if ($this->show_unstocked)
+            $query .= "WHERE 1 = 1\n";
+        else
+            $query .= "WHERE t1.stocked = true\n";
+
         $parameters = array();
 
         if ($department !== null)
         {
-            $query .= <<<SQL
-AND t7.department_code = :department
-
-SQL;
+            $query .= "AND t7.department_code = :department\n";
             $parameters[':department'] = $department;
 
             if ($course !== null)
             {
-                $query .= <<<SQL
-AND t6.course_number = :course
-
-SQL;
+                $query .= "AND t6.course_number = :course\n";
                 $parameters[':course'] = $course;
 
                 if ($section !== null)
                 {
-                    $query .= <<<SQL
-AND t5.slot = :section
-
-SQL;
+                    $query .= "AND t5.slot = :section\n";
                     $parameters[':section'] = $section;
                 }
             }
         }
+        
         $query .= <<<SQL
 GROUP BY t1.isbn
 ORDER BY t1.title;
@@ -94,10 +105,10 @@ SQL;
      * @param string $author the name of the author
      * @return stdClass[] all stocked books by the author
      */
-    public function getStockedBooksByAuthor($author)
+    public function getBooksByAuthor($author)
     {
-        $books = $this->db->prepare(<<<SQL
-SELECT t1.isbn, t1.title, t1.price,
+        $query = <<<SQL
+SELECT t1.isbn, t1.title, t1.stocked, t1.price,
 GROUP_CONCAT(DISTINCT t3.display_name ORDER BY t3.display_name SEPARATOR ', ') AS authors,
 GROUP_CONCAT(DISTINCT CONCAT_WS(' ', t7.department_code, t6.course_number, t5.slot) ORDER BY t7.department_code, t6.course_number, t5.slot SEPARATOR ', ') AS courses
 FROM books t1
@@ -107,40 +118,21 @@ LEFT JOIN section_books t4 ON t4.isbn = t1.isbn
 LEFT JOIN sections t5 ON t5.section_number = t4.section_number
 LEFT JOIN courses t6 ON t6.course_number = t4.course_number
 LEFT JOIN departments t7 ON t7.department_code = t4.department_code
-WHERE t1.stocked = true
+SQL;
+
+        if ($this->show_unstocked)
+            $query .= "WHERE 1 = 1\n";
+        else
+            $query .= "WHERE t1.stocked = true\n";
+
+        $query .= <<<SQL
 AND t3.sort_name = :author
 OR t3.display_name = :author
 GROUP BY t1.isbn
 ORDER BY t1.title;
-SQL
-        );
+SQL;
+        $books = $this->db->prepare($query);
         $books->execute(array(':author' => $author));
-        return $books->fetchAll(\PDO::FETCH_OBJ);
-    }
-
-    /**
-     * Get all books, stocked or otherwise.
-     *
-     * @return stdClass[] all books
-     */
-    public function getAllBooks()
-    {
-        $books = $this->db->prepare(<<<SQL
-SELECT t1.isbn, t1.title, t1.quantity, t1.stocked, t1.price,
-GROUP_CONCAT(DISTINCT t3.display_name ORDER BY t3.display_name SEPARATOR ', ') AS authors,
-GROUP_CONCAT(DISTINCT CONCAT_WS(' ', t7.department_code, t6.course_number, t5.slot) ORDER BY t7.department_code, t6.course_number, t5.slot SEPARATOR ', ') AS courses
-FROM books t1
-LEFT JOIN book_authors t2 ON t2.isbn = t1.isbn
-LEFT JOIN authors t3 ON t3.author_id = t2.author_id
-LEFT JOIN section_books t4 ON t4.isbn = t1.isbn
-LEFT JOIN sections t5 ON t5.section_number = t4.section_number
-LEFT JOIN courses t6 ON t6.course_number = t4.course_number
-LEFT JOIN departments t7 ON t7.department_code = t4.department_code
-GROUP BY t1.isbn
-ORDER BY t1.title;
-SQL
-        );
-        $books->execute();
         return $books->fetchAll(\PDO::FETCH_OBJ);
     }
 
@@ -153,7 +145,7 @@ SQL
     public function getBookByISBN($isbn)
     {
         $books = $this->db->prepare(<<<SQL
-SELECT t1.isbn, t1.title, t1.price,
+SELECT t1.isbn, t1.title, t1.stocked, t1.price,
 GROUP_CONCAT(DISTINCT t3.display_name ORDER BY t3.display_name SEPARATOR ', ') AS authors,
 GROUP_CONCAT(DISTINCT CONCAT_WS(' ', t7.department_code, t6.course_number, t5.slot) ORDER BY t7.department_code, t6.course_number, t5.slot SEPARATOR ', ') AS courses
 FROM books t1
@@ -180,7 +172,7 @@ SQL
     public function getBooksByStudent($student_number)
     {
         $books = $this->db->prepare(<<<SQL
-SELECT t7.department_code, t6.course_number, t5.slot, t1.isbn, t1.title, t1.price,
+SELECT t7.department_code, t6.course_number, t5.slot, t1.isbn, t1.title, t1.stocked, t1.price,
 GROUP_CONCAT(DISTINCT t3.display_name ORDER BY t3.display_name SEPARATOR ', ') AS authors,
 GROUP_CONCAT(DISTINCT CONCAT_WS(' ', t7.department_code, t6.course_number, t5.slot) ORDER BY t7.department_code, t6.course_number, t5.slot SEPARATOR ', ') AS courses
 FROM books t1 
@@ -212,7 +204,7 @@ SQL
     public function getBooksByOrder($order_id)
     {
         $books = $this->db->prepare(<<<SQL
-SELECT t1.isbn, t1.title, t1.price, t8.quantity,
+SELECT t1.isbn, t1.title, t1.stocked, t1.price, t8.quantity,
 GROUP_CONCAT(DISTINCT t3.display_name ORDER BY t3.display_name SEPARATOR ', ') AS authors,
 GROUP_CONCAT(DISTINCT CONCAT_WS(' ', t7.department_code, t6.course_number, t5.slot) ORDER BY t7.department_code, t6.course_number, t5.slot SEPARATOR ', ') AS courses
 FROM books t1
@@ -223,8 +215,7 @@ LEFT JOIN sections t5 ON t5.section_number = t4.section_number
 LEFT JOIN courses t6 ON t6.course_number = t4.course_number
 LEFT JOIN departments t7 ON t7.department_code = t4.department_code
 LEFT JOIN order_books t8 ON t8.isbn = t1.isbn
-WHERE t1.stocked = true
-AND t8.order_id = :order_id
+WHERE t8.order_id = :order_id
 GROUP BY t1.isbn
 ORDER BY t1.title;
 SQL
