@@ -37,6 +37,14 @@ class Cart
         if (!isset($_SESSION['cart_books']))
             $_SESSION['cart_books'] = array();
         $book->quantity = 1;
+
+        /* Make sure the book doesn't already exist in the cart. */
+        foreach ($_SESSION['cart_books'] as $other_book)
+            if ($other_book->isbn == $book->isbn)
+                /* If it does, we'll just increment the quantity of the existing
+                 * record and bail out. */
+                return $other_book->quantity++;
+
         $_SESSION['cart_books'][] = $book;
     }
 
