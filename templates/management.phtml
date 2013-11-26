@@ -1,0 +1,59 @@
+<h2>Add Book</h2>
+<form action="<?= ROOT_URL ?>/management" method="post">
+    <label for="add_isbn">ISBN:</label>
+    <input type="text" name="isbn" id="add_isbn"><br>
+    <label for="add_title">Title:</label>
+    <input type="text" name="title" id="add_title"><br>
+    <label for="add_price">Price:</label>
+    <input type="text" name="price" id="add_price"><br>
+    <input type="submit" name="manage_add" value="Add Book">
+</form>
+
+<h2>Update Book Stockability</h2>
+<form action="<?= ROOT_URL ?>/management" method="post">
+    <label for="stock_isbn">ISBN:</label>
+    <input type="text" name="isbn" id="stock_isbn"><br>
+    <label for="stock_state">Stockability:</label>
+    <select name="stocked">
+        <option value="true">Stocked</option>
+        <option value="false">Not Stocked</option>
+    </select><br>
+    <input type="submit" name="manage_stocked" value="Update Stockability">
+</form>
+
+<h2>Add Author</h2>
+<form action="<?= ROOT_URL ?>/management" method="post">
+    <label for="author_given_name">Given name:</label>
+    <input type="text" name="given_name" id="author_given_name"><br>
+    <label for="author_family_name">Family name:</label>
+    <input type="text" name="family_name" id="author_family_name"><br>
+    <input type="submit" name="manage_author" value="Add Author">
+</form>
+
+<h2>Associate Author with Book</h2>
+<form action="<?= ROOT_URL ?>/management" method="post">
+    <label for="book_author_isbn">ISBN:</label>
+    <input type="text" name="isbn" id="book_author_isbn"><br>
+    <label for="book_author">Author:</label>
+    <select name="author_id" id="book_author">
+        <?php foreach($authors as $author): ?>
+        <option value="<?= $author->author_id ?>"><?= $author->sort_name ?></option>
+        <?php endforeach; ?>
+    </select><br>
+    <input type="submit" name="manage_book_author_add" value="Add Author to Book">
+    <input type="submit" name="manage_book_author_remove" value="Remove Author from Book">
+</form>
+
+<h2>Associate Book with Section</h2>
+<form action="<?= ROOT_URL ?>/management" method="post">
+    <label for="book_section_isbn">ISBN:</label>
+    <input type="text" name="isbn" id="book_section_isbn"><br>
+    <label for="book_section">Section:</label>
+    <select name="section_number" id="book_section">
+        <?php foreach($sections as $section): ?>
+        <option value="<?= $section->section_number ?>"><?= $section->department_code ?> <?= $section->course_number ?> <?= $section->slot ?></option>
+        <?php endforeach; ?>
+    </select><br>
+    <input type="submit" name="manage_book_section_add" value="Add Book to Section">
+    <input type="submit" name="manage_book_section_remove" value="Remove Book from Section">
+</form>

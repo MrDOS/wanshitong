@@ -299,8 +299,9 @@ SQL
 
         $books = $this->db->prepare(<<<SQL
 INSERT INTO books
-(books.isbn, books.title, books.stock, books.price)
-VALUES (:isbn, :title, :stock, :price);
+(books.isbn, books.title, books.quantity, books.price)
+VALUES (:isbn, :title, :stock, :price)
+ON DUPLICATE KEY UPDATE title = VALUES(title), quantity = VALUES(quantity), price = VALUES(price);
 SQL
         );
         $books->execute(array(

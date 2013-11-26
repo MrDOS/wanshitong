@@ -62,6 +62,9 @@ Router::route(array(
     '/inventory/?' => function() use ($db) {
             return new \wanshitong\controllers\InventoryController(new Books($db), new Departments($db), new Authors($db));
         },
+    '/management/?' => function() use ($db) {
+            return new \wanshitong\controllers\ManagementController(new Books($db), new Departments($db), new Authors($db));
+        },
     '/login/?' => function() use ($db) {
             return new \wanshitong\controllers\LoginController(new Staff($db));
         },

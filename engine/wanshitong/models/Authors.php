@@ -34,7 +34,7 @@ class Authors implements Repository
     public function getAuthors()
     {
         $authors = $this->db->prepare(<<<SQL
-SELECT authors.sort_name 
+SELECT authors.author_id, authors.sort_name 
 FROM authors
 ORDER BY authors.sort_name;
 SQL
@@ -60,8 +60,8 @@ SQL
             throw new \Exception("Family name cannot be empty");
 
         $authors = $this->db->prepare(<<<SQL
-INSERT INTO author
-(author.given_name, author.family_name, author.sort_name, author.display_name)
+INSERT INTO authors
+(authors.given_name, authors.family_name, authors.sort_name, authors.display_name)
 VALUES (:given_name, :family_name, 
 CONCAT_WS(", ", :family_name, :given_name), 
 CONCAT_WS(" ", :given_name, :family_name));
