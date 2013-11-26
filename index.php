@@ -29,16 +29,6 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 session_start();
 
 /* Use statements to make the routes a little more clear. */
-use \wanshitong\controllers\BooksController;
-use \wanshitong\controllers\CartController;
-use \wanshitong\controllers\InventoryController;
-use \wanshitong\controllers\ErrorController;
-use \wanshitong\controllers\OrderController;
-use \wanshitong\controllers\OrdersController;
-use \wanshitong\controllers\LoginController;
-use \wanshitong\controllers\LogoutController;
-use \wanshitong\controllers\MessageController;
-use \wanshitong\controllers\StudentBooksController;
 use \wanshitong\models\Authors;
 use \wanshitong\models\Books;
 use \wanshitong\models\Departments;
@@ -50,33 +40,33 @@ use \wanshitong\Router;
 /* Configure routes. */
 Router::route(array(
     '/' => function() use ($db) {
-            return new MessageController('Welcome', 'We have books! They are for sale! For money!');
+            return new \wanshitong\controllers\MessageController('Welcome', 'We have books! They are for sale! For money!');
         },
     '/books/?' => function() use ($db) {
-            return new BooksController(new Books($db), new Departments($db), new Authors($db));
+            return new \wanshitong\controllers\BooksController(new Books($db), new Departments($db), new Authors($db));
         },
     '/books/student/?' => function() use ($db) {
-            return new StudentBooksController(new Books($db), new Departments($db), new Authors($db));
+            return new \wanshitong\controllers\StudentBooksController(new Books($db), new Departments($db), new Authors($db));
         },
     '/inventory/?' => function() use ($db) {
-            return new InventoryController(new Books($db), new Departments($db), new Authors($db));
+            return new \wanshitong\controllers\InventoryController(new Books($db), new Departments($db), new Authors($db));
         },
     '/cart/?' => function() use ($db) {
-            return new CartController(new Books($db), new Orders($db), new Students($db));
+            return new \wanshitong\controllers\CartController(new Books($db), new Orders($db), new Students($db));
         },
     '/orders/?' => function() use ($db) {
-            return new OrdersController(new Orders($db));
+            return new \wanshitong\controllers\OrdersController(new Orders($db));
         },
     '/order/([0-9]+)/?' => array(function() use ($db) {
-            return new OrderController(new Orders($db), new Students($db), new Books($db));
+            return new \wanshitong\controllers\OrderController(new Orders($db), new Students($db), new Books($db));
         }, array('order')),
     '/login/?' => function() use ($db) {
-            return new LoginController(new Staff($db));
+            return new \wanshitong\controllers\LoginController(new Staff($db));
         },
     '/logout/?' => function() use ($db) {
-            return new LogoutController();
+            return new \wanshitong\controllers\LogoutController();
         },
-    '.*' => new ErrorController()
+    '.*' => new \wanshitong\controllers\ErrorController()
 ));
 
 printf("\n<!-- Page generated in %0.6fs. -->", microtime(true) - $starttime);
