@@ -36,8 +36,7 @@ class Cart
     {
         if (!isset($_SESSION['cart_books']))
             $_SESSION['cart_books'] = array();
-        if (!isset($book->quantity))
-            $book->quantity = 1;
+        $book->quantity = 1;
         $_SESSION['cart_books'][] = $book;
     }
 
