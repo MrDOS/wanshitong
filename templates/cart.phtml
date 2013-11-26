@@ -28,7 +28,7 @@
                 </center>
             </td>
         </tr>
-        <?php $total += $book->price; ?>
+        <?php $total += $book->price * $book->quantity; ?>
     <?php endforeach; ?>
         <tr>
             <th>&nbsp;</th>
