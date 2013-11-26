@@ -1,5 +1,6 @@
 <?php namespace wanshitong\controllers;
 
+use \wanshitong\controllers\AuthenticatedController;
 use \wanshitong\views\OrdersView;
 
 /**
@@ -9,7 +10,7 @@ use \wanshitong\views\OrdersView;
  * @version 1.0.0
  * @since 1.0.0
  */
-class OrdersController extends AuthenticatedController
+class OrdersController extends Controller
 {
     private $orders_repository;
 
@@ -30,7 +31,7 @@ class OrdersController extends AuthenticatedController
      */
     public function get($get)
     {
-        parent::authenticate();
+        AuthenticatedController::authenticate();
 
         $orders = $this->orders_repository->getOutstandingOrders();
         $fulfilled_orders = $this->orders_repository->getFulfilledOrders();
@@ -47,7 +48,7 @@ class OrdersController extends AuthenticatedController
      */
     public function post($get, $post)
     {
-        parent::authenticate();
+        AuthenticatedController::authenticate();
 
         if (isset($post['order_fulfill']))
         {

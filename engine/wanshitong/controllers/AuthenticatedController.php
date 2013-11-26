@@ -5,18 +5,18 @@ use \wanshitong\models\Staff;
 use \wanshitong\views\MessageView;
 
 /**
- * A request controller accessible only by logged-in users.
+ * A sort-of controller that lets other controllers authenticate the user.
  *
  * @author scoleman
  * @version 1.0.0
  * @since 1.0.0
  */
-abstract class AuthenticatedController extends Controller
+class AuthenticatedController
 {
     /**
      * Verify that the user is authenticated. If not, end the request here.
      */
-    public function authenticate()
+    public static function authenticate()
     {
         if (!Staff::isLoggedIn())
         {

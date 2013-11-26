@@ -1,10 +1,11 @@
 <?php namespace wanshitong\controllers;
 
-use \wanshitong\controllers\Controller;
+use \wanshitong\controllers\AuthenticatedController;
 use \wanshitong\models\Authors;
 use \wanshitong\models\Books;
 use \wanshitong\models\Departments;
-use \wanshitong\views\FilterableBooksView;
+use \wanshitong\models\Staff;
+use \wanshitong\views\MessageView;
 
 /**
  * A request for a book list. The same as {@link BooksController} with the
@@ -27,5 +28,12 @@ class InventoryController extends BooksController
     {
         $books_repository->setShowUnstocked(true);
         parent::__construct($books_repository, $departments_repository, $authors_repository);
+    }
+
+    public function get($get)
+    {
+        AuthenticatedController::authenticate();
+
+        parent::get($get);
     }
 }

@@ -39,6 +39,7 @@ use \wanshitong\Router;
 
 /* Configure routes. */
 Router::route(array(
+    /* Public routes. */
     '/' => function() use ($db) {
             return new \wanshitong\controllers\MessageController('Welcome', 'We have books! They are for sale! For money!');
         },
@@ -47,9 +48,6 @@ Router::route(array(
         },
     '/books/student/?' => function() use ($db) {
             return new \wanshitong\controllers\StudentBooksController(new Books($db), new Departments($db), new Authors($db));
-        },
-    '/inventory/?' => function() use ($db) {
-            return new \wanshitong\controllers\InventoryController(new Books($db), new Departments($db), new Authors($db));
         },
     '/cart/?' => function() use ($db) {
             return new \wanshitong\controllers\CartController(new Books($db), new Orders($db), new Students($db));
@@ -60,6 +58,10 @@ Router::route(array(
     '/order/([0-9]+)/?' => array(function() use ($db) {
             return new \wanshitong\controllers\OrderController(new Orders($db), new Students($db), new Books($db));
         }, array('order')),
+    /* Staff-only. */
+    '/inventory/?' => function() use ($db) {
+            return new \wanshitong\controllers\InventoryController(new Books($db), new Departments($db), new Authors($db));
+        },
     '/login/?' => function() use ($db) {
             return new \wanshitong\controllers\LoginController(new Staff($db));
         },
