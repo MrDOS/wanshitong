@@ -29,6 +29,7 @@ class InventoryController extends BooksController
         $books_repository->setShowUnstocked(true);
         parent::__construct($books_repository, $departments_repository, $authors_repository);
         parent::setShowQuantity(true);
+        parent::setCanOrder(false);
     }
 
     public function get($get)

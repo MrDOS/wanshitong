@@ -20,6 +20,7 @@ class BooksController extends Controller
     private $authors_repository;
 
     private $show_quantity;
+    private $can_order;
 
     /**
      * Construct the controller.
@@ -35,11 +36,17 @@ class BooksController extends Controller
         $this->authors_repository = $authors_repository;
 
         $this->show_quantity = false;
+        $this->can_order = true;
     }
 
     public function setShowQuantity($show_quantity)
     {
         $this->show_quantity = $show_quantity;
+    }
+
+    public function setCanOrder($can_order)
+    {
+        $this->can_order = $can_order;
     }
 
     /**
@@ -71,6 +78,7 @@ class BooksController extends Controller
 
         $view = new FilterableBooksView($books, $departments, $department, $courses, $course, $sections, $section, $authors, $author);
         $view->setShowQuantity($this->show_quantity);
+        $view->setCanOrder($this->can_order);
         $view->render();
     }
 }
